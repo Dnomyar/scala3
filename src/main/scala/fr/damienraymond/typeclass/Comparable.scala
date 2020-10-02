@@ -1,4 +1,4 @@
-package typeclass
+package fr.damienraymond.typeclass
 
 trait Comparable[T]:
   extension(x: T) def isBigger(y: T): Boolean

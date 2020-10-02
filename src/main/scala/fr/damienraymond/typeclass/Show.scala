@@ -1,4 +1,4 @@
-package typeclass
+package fr.damienraymond.typeclass
 
 trait Show[T]:
   def show(t: T): String

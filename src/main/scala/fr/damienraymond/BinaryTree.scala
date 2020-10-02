@@ -1,4 +1,4 @@
-import typeclass.Show
+package fr.damienraymond
 
 import scala.util.Random
 import typeclass._
@@ -21,6 +21,13 @@ object BinaryTree{
       case BinaryTree.Node(l,v,r) => s"[${show(l)},$v,${show(r)}]"
     }
 
+  given binaryTreeFunctor as Functor[BinaryTree]:
+    extension [A, B](t: BinaryTree[A]) def map(f: A => B): BinaryTree[B] = t match {
+      case BinaryTree.Leaf => BinaryTree.Leaf
+      case BinaryTree.Node(l, v, r) =>
+        BinaryTree.Node(l.map(f), f(v), r.map(f))
+    }
+  
   extension[T] (tree: BinaryTree[T]) {
     def add(t: T)(using comparable: Comparable[T], show: Show[T]): BinaryTree[T] =
       tree match {
@@ -47,5 +54,5 @@ object BinaryTree{
       .foldLeft(BinaryTree.empty[Int])(_.add(_))
 
   println(tree.show)
-  println(BinaryTree.empty[Int].add(5).add(2).show)
+  println(BinaryTree.empty[Int].add(5).add(2).map(_ + 1).show)
 }
