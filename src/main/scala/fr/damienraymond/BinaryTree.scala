@@ -22,7 +22,7 @@ object BinaryTree{
     }
 
   extension[T] (tree: BinaryTree[T]) {
-    def add(t: T)(using comparable: Comparable[T], show: Show[T]): BinaryTree[T] =
+    def add(t: T)(using cgomparable: Comparable[T], show: Show[T]): BinaryTree[T] =
       tree match {
         case BinaryTree.Leaf => BinaryTree.Node(BinaryTree.Leaf, t, BinaryTree.Leaf)
         case n@BinaryTree.Node(l, v, r) if v.isBigger(t) =>
