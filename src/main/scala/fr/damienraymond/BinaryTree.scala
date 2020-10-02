@@ -9,7 +9,7 @@ enum BinaryTree[+T]:
   case Leaf
 
 object BinaryTree{
-  
+
   def empty[T]: BinaryTree[T] = BinaryTree.Leaf
 
   given showBinaryTree[T: Show] as Show[BinaryTree[T]]:
@@ -40,12 +40,12 @@ object BinaryTree{
 
 @main def treemain(s: String*) = {
   val r = new Random()
-  val tree = 
+  val tree =
     LazyList
       .continually(r.nextInt(20))
       .take(10)
       .foldLeft(BinaryTree.empty[Int])(_.add(_))
-      
-  println(tree.show)  
-  println(BinaryTree.empty[Int].add(5).add(2).show)  
+
+  println(tree.show)
+  println(BinaryTree.empty[Int].add(5).add(2).show)
 }
