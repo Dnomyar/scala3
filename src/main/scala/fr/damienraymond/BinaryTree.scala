@@ -13,30 +13,28 @@ object BinaryTree{
   def empty[T]: BinaryTree[T] = BinaryTree.Leaf
 
   given showBinaryTree[T: Show] as Show[BinaryTree[T]]:
-    def show(t: BinaryTree[T]): String = t match {
+    def show(t: BinaryTree[T]): String = t match 
       case BinaryTree.Leaf => "_"
       case BinaryTree.Node(BinaryTree.Leaf,v,BinaryTree.Leaf) => s"[$v]"
       case BinaryTree.Node(BinaryTree.Leaf,v,r) => s"[${v},${show(r)}]"
       case BinaryTree.Node(l,v,BinaryTree.Leaf) => s"[${show(l)},${v}]"
       case BinaryTree.Node(l,v,r) => s"[${show(l)},$v,${show(r)}]"
-    }
 
   given binaryTreeFunctor as Functor[BinaryTree]:
-    extension [A, B](t: BinaryTree[A]) def map(f: A => B): BinaryTree[B] = t match {
+    extension [A, B](t: BinaryTree[A]) def map(f: A => B): BinaryTree[B] = t match 
       case BinaryTree.Leaf => BinaryTree.Leaf
       case BinaryTree.Node(l, v, r) =>
         BinaryTree.Node(l.map(f), f(v), r.map(f))
-    }
+    
   
   extension[T] (tree: BinaryTree[T]) {
-    def add(t: T)(using comparable: Comparable[T], show: Show[T]): BinaryTree[T] =
-      tree match {
-        case BinaryTree.Leaf => BinaryTree.Node(BinaryTree.Leaf, t, BinaryTree.Leaf)
-        case n@BinaryTree.Node(l, v, r) if v.isBigger(t) =>
-          n.copy(left = l.add(t))
-        case n@BinaryTree.Node(l, v, r) =>
-          n.copy(right = r.add(t))
-      } 
+    def add(t: T)(using comparable: Comparable[T], show: Show[T]): BinaryTree[T] = tree match 
+      case BinaryTree.Leaf => BinaryTree.Node(BinaryTree.Leaf, t, BinaryTree.Leaf)
+      case n@BinaryTree.Node(l, v, r) if v.isBigger(t) =>
+        n.copy(left = l.add(t))
+      case n@BinaryTree.Node(l, v, r) =>
+        n.copy(right = r.add(t))
+      
 
     def show(using show: Show[T]): String = BinaryTree.showBinaryTree.show(tree)
 
@@ -45,7 +43,7 @@ object BinaryTree{
 
 
 
-@main def treemain(s: String*) = {
+@main def treemain(s: String*) = 
   val r = new Random()
   val tree =
     LazyList
@@ -55,4 +53,3 @@ object BinaryTree{
 
   println(tree.show)
   println(BinaryTree.empty[Int].add(5).add(2).map(_ + 1).show)
-}
